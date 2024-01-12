@@ -1,0 +1,24 @@
+---
+- name: Install Apache2 and Configure Display Information
+  hosts: WEB_SERVERS  
+  become: yes  # Run tasks with elevated privileges (sudo)
+
+  tasks:
+    - name: Install Apache2
+      package:
+        name: apache2
+        state: present
+
+    - name: Configure Apache2 custom HTML page
+      template:
+        src: custom_page.html.j2
+        dest: /var/www/html/index.html
+      notify: Restart Apache2
+
+  handlers:
+    - name: Restart Apache2
+      service:
+        name: apache2
+        state: restarted
+
+      
