@@ -48,3 +48,26 @@ Ansible modules:
     ansible-galaxy collection install amazon.aws
 
     
+    
+    Now lets get back to the assignment:
+    1. Create an ec2 instance with the following specifications:
+        - Create your own vpc
+        - Region: eu-west-1
+        - Instance type: t2.micro
+        - AMI-ID: A latest Amazon Linux 2 AMI of the region
+        - Security group: allow SSH (port 22), allow HTTP (port 80)
+        - Key Pair: Create a key pair using ansible and name it MyKeyPair.
+
+        from here , refer to my playbook named ec2-launch.yml to see the different modules invoked and the parameters given each module in order to achieve the creation of those resources.
+
+        NOTE: In Ansible, the order in which tasks are defined within a playbook does matter.    Ansible playbooks are executed sequentially and tasks are processed in the order they appear. The flow of task is from top to bottom.
+
+        Plays within a playbook are independent of each otherand can be executed in parallel by default. The order of plays matter ONLY if there are dependencies between them. 
+
+
+    2. Configure the ec2 instance by installing in it Apache and starting the service
+        Here, firstly, the public ip address of the newly cretaed instance should be added to the host group and secondly, the private key created during the key pair creation should have been deposited in your local machine. I dropped it in the same directory running my ansible script.
+
+        The host machine needs these two item in order to be able to ssh into the new instance and carry out system configuration vis-a-vis apache installatinn. 
+
+        Refer to my playbook....ec2-launch.yml and see the second play that is used to achieve this installation and starting of Apache.
