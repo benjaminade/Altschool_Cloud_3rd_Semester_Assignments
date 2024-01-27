@@ -22,6 +22,7 @@ install:
     - botocore >= 1.29.0
     - aws cli
     - pyhton >= 3.6
+    - Also ensure that you have all the necessary permissions to access AWS . Do.. aws configure on your local machine and supply all the necessary details for authentication.
 
 
 Ansible modules: 
@@ -68,6 +69,6 @@ Ansible modules:
     2. Configure the ec2 instance by installing in it Apache and starting the service
         Here, firstly, the public ip address of the newly cretaed instance should be added to the host group and secondly, the private key created during the key pair creation should have been deposited in your local machine. I dropped it in the same directory running my ansible script.
 
-        The host machine needs these two item in order to be able to ssh into the new instance and carry out system configuration vis-a-vis apache installatinn. 
+        The host machine needs these two items in order to be able to ssh into the new instance and carry out system configuration vis-a-vis apache installation. 
 
         Refer to my playbook....ec2-launch.yml and see the second play that is used to achieve this installation and starting of Apache.

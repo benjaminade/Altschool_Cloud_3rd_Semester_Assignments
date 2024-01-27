@@ -1,8 +1,8 @@
 ---
 - name: Provision an AWS EC2 Instance together with its Private network
   hosts: localhost
-  gather_facts: true
-  become_user: yes
+  #gather_facts: true
+  #become_user: yes
   vars:
     vpc_cidr: "10.10.0.0/16"
     subnet_cidr: "10.10.0.0/24"
@@ -139,8 +139,8 @@
   hosts:  apache_servers
   become: true
   remote_user: ec2-user
-  vars:
-    ansible_ssh_private_key_file: ./MyKeyPair.pem
+  #vars:
+    #ansible_ssh_private_key_file: ./MyKeyPair.pem
 
   tasks:
     - name: Update package cache
