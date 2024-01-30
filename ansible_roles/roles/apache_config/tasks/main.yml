@@ -1,0 +1,25 @@
+---
+# # tasks file for apache_config
+# - name: Configure EC2 Instance by Installing Apache and starting it
+#   hosts:  apache_servers
+#   become: true
+#   remote_user: ec2-user
+#   vars:
+#     ansible_ssh_private_key_file: ./MyKeyPair.pem
+
+#   tasks:
+    - name: Update package cache
+      yum:
+        name: "*"
+        state: latest
+
+    - name: Install Apache
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start Apache service
+      service:
+        name: httpd
+        state: started
+        enabled: yes

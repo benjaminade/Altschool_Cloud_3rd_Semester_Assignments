@@ -1,0 +1,13 @@
+---
+# tasks file for vpc    - name: Create a VPC
+- name: Create a vpc
+  amazon.aws.ec2_vpc_net:
+    name: "{{ vpc_name }}"
+    region: "{{ region }}"
+    cidr_block: "{{ vpc_cidr }}"
+    state: present
+  register: vpc_result
+
+- name: Print vpc id
+  debug:
+    var: vpc_result.vpc.id

@@ -1,0 +1,5 @@
+---
+# tasks file for yum_lock
+- name: Remove YUM lock files
+  command: rm -f /var/run/yum.pid
+  ignore_errors: yes

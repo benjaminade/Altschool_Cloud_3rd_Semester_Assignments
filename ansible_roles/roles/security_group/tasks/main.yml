@@ -1,0 +1,22 @@
+---
+# tasks file for security_group
+- name: Create a security group
+  ec2_group:
+    name: MySecurityGroup
+    region: "{{ region }}"
+    description: Allow ssh and http
+    vpc_id: "{{vpc_result.vpc.id}}"
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+  register: security_group_result
+
+- name: Print security group id
+  debug:
+    var: security_group_result.group_id

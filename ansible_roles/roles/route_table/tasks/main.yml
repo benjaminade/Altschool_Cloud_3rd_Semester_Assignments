@@ -1,0 +1,18 @@
+---
+# tasks file for route_table
+- name: Create subnet Route Table
+  amazon.aws.ec2_vpc_route_table:
+    vpc_id: "{{ vpc_result.vpc.id }}"
+    region: "{{ region }}"
+    tags:
+      Name: Public
+    subnets:
+      - "{{ subnet_result.subnet.id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw_result.gateway_id }}"
+  register: route_table_result
+
+- name: Print Route Table Id
+  debug:
+    var: route_table_result.route_table.id

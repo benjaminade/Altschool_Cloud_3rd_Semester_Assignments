@@ -1,0 +1,8 @@
+---
+# defaults file for ec2_instance
+key_pair_name: "MyKeyPair"
+region: "eu-west-1"
+type_of_instance: "t2.micro"
+group_name: "apache_servers"
+
+

@@ -1,0 +1,26 @@
+---
+- name: Launch an ec2 instance in its network
+  hosts: localhost
+  become_user: true
+  gather_facts: true
+
+  roles:
+    - vpc
+    - igw
+    - subnet
+    - route_table
+    - ami
+    - security_group
+    - key_pair
+    - ec2_instance
+
+- name: Configure the EC2 instance
+  hosts: apache_servers
+  remote_user: ec2-user
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: ./MyKeyPair.pem
+
+  roles:
+    #- yum_lock
+    - apache_config

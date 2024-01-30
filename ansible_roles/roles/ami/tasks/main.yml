@@ -1,0 +1,9 @@
+---
+# tasks file for ami
+- name: Get the latest Amazon Linux 2 AMI ID for eu-west-1
+  command: aws ec2 describe-images --region "{{ region }}" --owners amazon --filters "Name=name,Values=amzn2-ami-hvm-*-x86_64-gp2" --query 'Images | [0].ImageId' --output text
+  register: ami_result
+
+- name: Print AMI ID
+  debug:
+    var: ami_result.stdout

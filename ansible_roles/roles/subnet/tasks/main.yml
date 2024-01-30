@@ -1,0 +1,14 @@
+---
+# tasks file for subnet
+- name: Create a Subnet
+  ec2_vpc_subnet:
+    region: "{{ region }}"
+    cidr: "{{ subnet_cidr }}"
+    vpc_id: "{{ vpc_result.vpc.id }}"
+    tags:
+      Name: MySubnet
+  register: subnet_result
+
+- name: Print Subnet ID
+  debug:
+    var: subnet_result.subnet.id

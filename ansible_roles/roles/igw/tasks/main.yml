@@ -1,0 +1,11 @@
+---
+# tasks file for igw
+- name: Create Internet gateway
+  ec2_vpc_igw:
+    vpc_id: "{{ vpc_result.vpc.id }}"
+    region: "{{ region }}"
+  register: igw_result
+
+- name: Print igw id
+  debug:
+    var: igw_result.gateway_id

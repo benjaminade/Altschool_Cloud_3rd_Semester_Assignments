@@ -1,0 +1,49 @@
+---
+# tasks file for ec2_instance
+- name: To Check if ec2 with a specific tag and running do exists
+  amazon.aws.ec2_instance_info:
+    region: "{{ region }}"
+    filters:
+      instance-state-name: "running" 
+      "tag:Name": BenEC2Instance
+  register: existing_instances
+
+# Skip the creation of EC2 instance if it exists
+- name: Create an Ec2 instance
+  when: existing_instances.instances | length == 0
+  amazon.aws.ec2_instance:
+    key_name: MyKeyPair
+    region: "{{ region }}"
+    instance_type: "{{ type_of_instance }}"
+    image_id: "{{ami_result.stdout}}"
+    security_group: MySecurityGroup
+    count: 1
+    vpc_subnet_id: "{{subnet_result.subnet.id}}"
+    wait: yes
+    wait_timeout: 300
+    network:
+      assign_public_ip: yes
+    tags:
+       Name: BenEC2Instance
+  register: ec2_instance_result
+
+- name: Setting the ec2 Public IP and assign it to a variable 
+  set_fact:
+    public_address: "{{ existing_instances.instances[0].public_ip_address if existing_instances.instances | length > 0 else ec2_instance_result.instances[0].public_ip_address }}"
+
+- name: Print the set public ip address
+  debug:
+    var: public_address
+
+- name: Add the Instance to the Host Group
+  add_host:
+    name: "{{ public_address }}"
+    groups: "{{ group_name }}"
+
+
+- name: Wait for SSH to Become available
+  wait_for:
+    host: "{{ existing_instances.instances[0].public_ip_address if existing_instances.instances | length > 0 else ec2_instance_result.instances[0].public_ip_address }}"
+    port: 22
+    state: started
+    timeout: 300

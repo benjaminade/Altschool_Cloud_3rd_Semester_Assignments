@@ -1,0 +1,3 @@
+---
+# defaults file for ami
+region: "eu-west-1"
